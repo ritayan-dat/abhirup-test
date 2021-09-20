@@ -47,6 +47,7 @@
 		<!-- web super admin -->
 		<p>Cheque Number:<input type="text" class="cheque-valid" placeholder="Cheque number"></p>
 		<p>NEFT/RTGS Date: <input type="text" id="datepicker-future"  placeholder="Date" /></p>
+		<!-- few things same as web like web admin -->
 	</div>
 
 </form>
