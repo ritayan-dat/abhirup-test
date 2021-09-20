@@ -14,8 +14,8 @@
 <style type="text/css">
 	.ui-datepicker {
     /*background: transparent;*/
-    background: darkcyan;
-    color: white;
+    background: white;
+    color: red;
 }
 #error{
 	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -44,6 +44,9 @@
 		<p>MICR code:<input type="text" class="number" placeholder="MICR code" /></p>
 		<p>Mobile Number:<input type="text" class="mobile-valid" placeholder="Cell number"></p>
 		<p>Email Id:<input id="email_address" placeholder="Email id"><span id="error" style="display:none;color:red;">Wrong email</span></p>
+		<!-- web super admin -->
+		<p>Cheque Number:<input type="text" class="cheque-valid" placeholder="Cheque number"></p>
+		<p>NEFT/RTGS Date: <input type="text" id="datepicker-future"  placeholder="Date" /></p>
 	</div>
 
 </form>
@@ -53,6 +56,9 @@
 	$(document).ready(function() {
 	$(function() {
     $( "#datepicker" ).datepicker({  maxDate: new Date() });
+  });
+	$(function() {
+    $( "#datepicker-future" ).datepicker({  minDate: new Date() });
   });
 	$('.number').keypress(function(event) {
     if(event.which < 48
@@ -65,21 +71,31 @@
         event.preventDefault();
     } // prevent if already dot
 });		
-	$('.zipnumber').keypress(function(event) {
-			// if ($this.val().length > 5) {
-	  //               event.preventDefault();
-	  //               return false;
-	  //           }  some changes required
-    if(event.which < 48
-    || event.which > 59) {
-        event.preventDefault();
-    } // prevent if not number/dot
+	$('.zipnumber').on('keypress', function(e) {
 
-    if(event.which == 48
-    && $(this).val().indexOf('.') != -1) {
-        event.preventDefault();
-    } // prevent if already dot
-});		
+            var $this = $(this);
+            var regex = new RegExp("^[0-9\b]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            // for 6 digit number only
+            if ($this.val().length > 5) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.charCode < 54 && e.charCode > 47) {
+                if ($this.val().length == 0) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    return true;
+                }
+
+            }
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
 $(".panid").keydown(function (e){
 		var k = e.keyCode || e.which;
 		var ok = k >= 65 && k <= 90 || // A-Z
@@ -119,6 +135,31 @@ $('.mobile-valid').on('keypress', function(e) {
             e.preventDefault();
             return false;
         });
+$('.cheque-valid').on('keypress', function(e) {
+
+            var $this = $(this);
+            var regex = new RegExp("^[0-9\b]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            // for 6 digit number only
+            if ($this.val().length > 5) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.charCode < 54 && e.charCode > 47) {
+                if ($this.val().length == 0) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    return true;
+                }
+
+            }
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
 $('#email_address').on('keypress', function() {
     var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
     if(!re) {
@@ -127,5 +168,6 @@ $('#email_address').on('keypress', function() {
         $('#error').hide();
     }
 })
+
    });		
 </script>
