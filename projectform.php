@@ -17,11 +17,11 @@
     background: white;
     color: red;
 }
-#error{
+/*#error{
 	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
-}
-
+} old version
+*/
 </style>
 <body>
 <form class="text-center border border-light p-5">
@@ -43,7 +43,8 @@
 		<p>IFSC code:<input type="text" class="panid" placeholder="IFSC CODE" /></p>		
 		<p>MICR code:<input type="text" class="number" placeholder="MICR code" /></p>
 		<p>Mobile Number:<input type="text" class="mobile-valid" placeholder="Cell number"></p>
-		<p>Email Id:<input id="email_address" placeholder="Email id"><span id="error" style="display:none;color:red;">Wrong email</span></p>
+		<p>Email Id:<input id="email_address" placeholder="Email id"></p>
+        <!-- <span id="error" style="display:none;color:red;">Wrong email</span> -->
 		<!-- web super admin -->
 		<p>Cheque Number:<input type="text" class="cheque-valid" placeholder="Cheque number"></p>
 		<p>NEFT/RTGS Date: <input type="text" id="datepicker-future"  placeholder="Date" /></p>
@@ -161,13 +162,21 @@ $('.cheque-valid').on('keypress', function(e) {
             e.preventDefault();
             return false;
         });
-$('#email_address').on('keypress', function() {
-    var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
-    if(!re) {
-        $('#error').show();
-    } else {
-        $('#error').hide();
+$('#email_address').on('keyup', function() {
+    // var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
+    // if(!re) {
+    //     $('#error').show();
+    // } else {
+    //     $('#error').hide();
+    // } old version
+    // new vesion
+    $('span.error-keyup-7').remove();
+    var inputVal = $(this).val();
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if(!emailReg.test(inputVal)) {
+        $(this).after('<span class="error error-keyup-7" style="color:red;">Invalid Email Format.</span>');
     }
+
 })
 
    });		
