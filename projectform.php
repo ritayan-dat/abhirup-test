@@ -82,7 +82,7 @@
                 e.preventDefault();
                 return false;
             }
-            if (e.charCode < 54 && e.charCode > 47) {
+            if (e.charCode < 49 && e.charCode > 42) {
                 if ($this.val().length == 0) {
                     e.preventDefault();
                     return false;
@@ -146,7 +146,7 @@ $('.cheque-valid').on('keypress', function(e) {
                 e.preventDefault();
                 return false;
             }
-            if (e.charCode < 54 && e.charCode > 47) {
+            if (e.charCode < 48 && e.charCode > 42) {
                 if ($this.val().length == 0) {
                     e.preventDefault();
                     return false;
